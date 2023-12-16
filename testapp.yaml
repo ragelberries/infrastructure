@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: vue
-        image: $CONTAINER_REGISTRY/testapp:$TAG
+        image: ${{CONTAINER_REGISTRY}}/testapp:$TAG
         ports:
 ---
 apiVersion: v1
