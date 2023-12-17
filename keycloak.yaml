@@ -21,8 +21,8 @@ spec:
         args: ["start-dev"]
         resources:
           limits:
-            memory: 1GB
             cpu: "1"
+            memory: "1Gi"
         env:
           - name: KEYCLOAK_ADMIN
             valueFrom:

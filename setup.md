@@ -38,3 +38,5 @@ registries = ['localhost:5000']
 Follow the "Create self-hosted runner" on github with the runner user, using `/mnt/_work` as the work folder, and stop before the "run" step
 Do `./svc.sh install runner` as root with su
 sudo systemctl start  actions.runner.ragelberries.ragelberries.service
+
+After first infrastructure deploy, change standard storage class, and manually kill the old sc if needed
