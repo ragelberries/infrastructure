@@ -19,6 +19,10 @@ spec:
       - name: keycloak
         image: quay.io/keycloak/keycloak
         args: ["start-dev"]
+        resources:
+          limits:
+            memory: 1GB
+            cpu: "1"
         env:
           - name: KEYCLOAK_ADMIN
             valueFrom:

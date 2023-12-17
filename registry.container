@@ -1,0 +1,12 @@
+[Unit]
+Description=Local container registry
+After=local-fs.target
+
+[Container]
+ContainerName=registry
+Image=docker.io/library/registry:2
+Volume=/mnt/registry:/var/lib/registry
+PublishPort=5000:5000
+
+[Install]
+WantedBy=multi-user.target default.target
