@@ -16,7 +16,7 @@ sudo apt install snapd
 Add  `cgroup_memory=1 cgroup_enable=memory ipv6.disable=1`to `/boot/cmdline.txt`
 sudo snap install microk8s --classic
 create /mnt/ragelberries as/for root
-microk8s enable ingress hostpath-storage
+microk8s enable ingress hostpath-storage rbac
 sudo apt install letsencrypt
 sudo certbot certonly --manual --preferred-challenges=dns --email william.arvidsson@gmail.com --server https://acme-v02.api.letsencrypt.org/directory --agree-tos -d ragelberries.net -d *.ragelberries.net
 create kubernetes secret cert from ragelberries fullchain and privkey
