@@ -16,5 +16,9 @@ jobs:
       - name: Apply keycloak
         run: envsubst < keycloak.yaml | kubectl apply -f -
 
+      - name: Set container registry environment variable
+        run: echo "CONTAINER_REGISTRY=${{ vars.CONTAINER_REGISTRY }}" >> "$GITHUB_ENV"
+      - name: Set testapp tag environment variable
+        run: echo "TESTAPP_TAG=${{ vars.TESTAPP_TAG }}" >> "$GITHUB_ENV"
       - name: Apply testapp
         run: envsubst < testapp.yaml | kubectl apply -f -

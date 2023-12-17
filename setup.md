@@ -11,14 +11,20 @@ Pin-Priority: -2
 sudo apt update
 sudo apt upgrade
 sudo apt install -t testing podman
+
 sudo apt install snapd
 Add  `cgroup_memory=1 cgroup_enable=memory ipv6.disable=1`to `/boot/cmdline.txt`
 sudo snap install microk8s --classic
-microk8s enable ingress hostpath-storage
 create /mnt/ragelberries as/for root
+microk8s enable ingress hostpath-storage
 sudo apt install letsencrypt
 sudo certbot certonly --manual --preferred-challenges=dns --email william.arvidsson@gmail.com --server https://acme-v02.api.letsencrypt.org/directory --agree-tos -d ragelberries.net -d *.ragelberries.net
 create kubernetes secret cert from ragelberries fullchain and privkey
+create keycloak secret with admin-name and admin-password
+POSSIBLY DO THESE BEFORE ENABLING HOSTPATH?
+Deploy runner-role.yaml, runner-rolebinding.yaml and sc.yaml manually as privileged user
+Before first infrastructure deploy, change standard storage class in microk8s
+
 Add to /etc/ssh/sshd_config:
 ```
 PermitRootLogin no
@@ -39,4 +45,4 @@ Follow the "Create self-hosted runner" on github with the runner user, using `/m
 Do `./svc.sh install runner` as root with su
 sudo systemctl start  actions.runner.ragelberries.ragelberries.service
 
-After first infrastructure deploy, change standard storage class, and manually kill the old sc if needed
+
