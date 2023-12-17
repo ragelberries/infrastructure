@@ -45,4 +45,11 @@ Follow the "Create self-hosted runner" on github with the runner user, using `/m
 Do `./svc.sh install runner` as root with su
 sudo systemctl start  actions.runner.ragelberries.ragelberries.service
 
+openssl genrsa -out runner.pem 2048
+openssl req -new -key runner.pem -out runner.csr -subj "/CN=runner"
+`base64 -w 0 runner.csr` and add it as the request in the runner-csr.example.yaml file
+kubectl apply -f runner-csr.yaml
+kubectl certificate pprove runner
+use microk8s config as a base and add private key as base64 and this as client authority:
+kubectl get csr runner -o jsonpath={.status.certificate}
 
