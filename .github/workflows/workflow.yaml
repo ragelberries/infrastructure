@@ -14,7 +14,7 @@ jobs:
         run: envsubst < ingress.yaml | kubectl apply -f -
 
       - name: Apply keycloak
-        run: envsubst < keycloak.yaml | kubectl apply -f -
+        run: kubectl apply -f keycloak.yaml
 
       - name: Set container registry environment variable
         run: echo "CONTAINER_REGISTRY=${{ vars.CONTAINER_REGISTRY }}" >> "$GITHUB_ENV"
@@ -22,3 +22,4 @@ jobs:
         run: echo "TESTAPP_TAG=${{ vars.TESTAPP_TAG }}" >> "$GITHUB_ENV"
       - name: Apply testapp
         run: envsubst < testapp.yaml | kubectl apply -f -
+        
