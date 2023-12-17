@@ -16,7 +16,7 @@ spec:
         image: $CONTAINER_REGISTRY/testapp:$TESTAPP_TAG
         resources:
           limits:
-            memory: 1GB
+            memory: "1Gi"
             cpu: "1"
 ---
 apiVersion: v1
