@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: vue
-        image: $CONTAINER_REGISTRY/testapp:600ffdddc2a8fe42c8fafcb215b9d016afb2f6e5
+        image: $CONTAINER_REGISTRY/testapp:e36222c96a19164d0f24c04bcca151ea8d84375e
         resources:
           limits:
             memory: "1Gi"
