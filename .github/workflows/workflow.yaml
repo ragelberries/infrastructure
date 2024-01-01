@@ -23,4 +23,5 @@ jobs:
         run: echo "CONTAINER_REGISTRY=${{ vars.CONTAINER_REGISTRY }}" >> "$GITHUB_ENV"
       - name: Apply testapp
         run: envsubst < testapp.yaml | kubectl apply -f -
+
         
