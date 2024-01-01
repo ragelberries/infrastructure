@@ -16,8 +16,8 @@ spec:
         image: $CONTAINER_REGISTRY/testapp:67c75d9290f5edf4deb1a4dddfab879baf9fca4e
         resources:
           limits:
-            memory: "1Gi"
-            cpu: "1"
+            memory: "500Mi"
+            cpu: "0.25"
       - name: testapp-backend
         image: $CONTAINER_REGISTRY/testapp-api:latest
         env:
@@ -29,8 +29,8 @@ spec:
             value: testclient
         resources:
           limits:
-            memory: "1Gi"
-            cpu: "1"
+            memory: "500Mi"
+            cpu: "0.25"
 
 ---
 apiVersion: v1
