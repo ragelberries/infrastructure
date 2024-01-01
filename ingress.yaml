@@ -27,7 +27,17 @@ spec:
           service:
             name: testapp
             port:
-              name: http
+              number: 80
+  - host: testapp-api.ragelberries.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: testapp
+            port:
+              number: 8080
   - host: keycloak.ragelberries.net
     http:
       paths:
