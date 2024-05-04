@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: testapp-frontend
-        image: $CONTAINER_REGISTRY/testapp:96ec59d7959f66c1a0f7e89385db782d371837cd
+        image: $CONTAINER_REGISTRY/testapp:e8099367514fdaf8824a5ec57ae246883154dde3
         resources:
           limits:
             memory: "500Mi"
