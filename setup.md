@@ -32,3 +32,5 @@ use microk8s config as a base and add private key as base64 and this as client a
 kubectl get csr runner -o jsonpath={.status.certificate}
 add export KUBECONFIG=~/.kube/config to .env in runner folder
 
+
+
