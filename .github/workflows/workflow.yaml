@@ -15,6 +15,9 @@ jobs:
       - name: Set cert name environment variable
         run: echo "CERT_NAME=${{ vars.CERT_NAME }}" >> "$GITHUB_ENV"
 
+      - name: whick kubectl
+        run: which kubectl
+
       - name: Show k8s config
         run: kubectl config view
       - name: Show env
