@@ -5,6 +5,10 @@ on:
   push:
     branches:
     - 'master'
+env:
+  KUBECONFIG: ~/.kube/config
+
+
 jobs:
   Explore-GitHub-Actions:
     runs-on: self-hosted
