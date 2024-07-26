@@ -6,7 +6,7 @@ on:
     branches:
     - 'master'
 env:
-  KUBECONFIG: ~/.kube/config
+  KUBECONFIG: /home/runner/.kube/config
 
 
 jobs:
