@@ -14,6 +14,12 @@ jobs:
 
       - name: Set cert name environment variable
         run: echo "CERT_NAME=${{ vars.CERT_NAME }}" >> "$GITHUB_ENV"
+
+      - name: Show k8s config
+        run: kubectl config view
+      - name: Show env
+        run: env
+
       - name: Apply ingress config
         run: envsubst < ingress.yaml | kubectl apply -f -
 
