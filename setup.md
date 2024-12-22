@@ -1,17 +1,17 @@
 # Setup environment
-Install Raspberry Pi Os Lite 64 bit Debian bookword\
+Install Raspberry Pi Os Lite 64 bit Debian bookword  
 
 ```
 sudo apt update
 sudo apt upgrade
 ```
 
-Add  `cgroup_memory=1 cgroup_enable=memory` to `/boot/firmware/cmdline.txt`\
+Add  `cgroup_memory=1 cgroup_enable=memory` to `/boot/firmware/cmdline.txt`  
 Add to /etc/ssh/sshd_config:
 ```
 PermitRootLogin no
 ```
-Restart\
+Restart  
 ```
 sudo mkdir /mnt/arvidsson
 ```
@@ -32,8 +32,8 @@ Create /runner/_work and chown runner:runner
 ```
 sudo loginctl enable-linger runner
 ```
-Follow the "Create self-hosted runner" on github with the runner user, using `/mnt/_work` as the work folder, and stop before the "run" step\
-Do `./svc.sh install runner` as root with su\
+Follow the "Create self-hosted runner" on github with the runner user, using `/mnt/_work` as the work folder, and stop before the "run" step  
+Do `./svc.sh install runner` as root with su  
 ```
 sudo systemctl start  actions.runner.ragelberries.ragelberries.service
 ```
@@ -50,8 +50,8 @@ kubectl certificate approve runner
 use microk8s config as a base and add private key as base64 and this as client authority:
 ```
 kubectl get csr runner -o jsonpath={.status.certificate}
-add export KUBECONFIG=~/.kube/config to .env in runner folder
 ```
+add `export KUBECONFIG=~/.kube/config` to .env in runner folder
 
 
 
