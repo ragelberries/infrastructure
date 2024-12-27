@@ -1,0 +1,30 @@
+
+---
+- name: Setup backup.service and backup.timer
+  hosts: all
+  become: true
+  tasks:
+  - name: Copy backup.service
+    ansible.builtin.copy:
+      src: ./backup.service
+      dest: /etc/systemd/system/
+
+  - name: Copy backup.timer
+    ansible.builtin.copy:
+      src: ./backup.timer
+      dest: /etc/systemd/system/
+
+  - name: systemd daemon reload
+    ansible.builtin.systemd:
+      daemon_reload: true
+
+  - name: Enable backup.service
+    ansible.builtin.systemd:
+      name: backup.service
+      enabled: true
+
+  - name: Enable and start backup.timer
+    ansible.builtin.systemd:
+      name: backup.timer
+      enabled: true
+      state: started

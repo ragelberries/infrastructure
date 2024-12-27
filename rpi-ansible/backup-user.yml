@@ -1,0 +1,10 @@
+---
+- name: Backup tasks
+  hosts: all
+  become: true
+  tasks:
+  - name: Create backup user
+    ansible.builtin.user:
+      name: "{{ backup_user }}"
+      create_home: yes
+

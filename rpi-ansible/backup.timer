@@ -1,0 +1,9 @@
+[Unit]
+Description=Run k3s backup at 3:30 AM daily
+
+[Timer]
+OnCalendar=*-*-* 03:30:00
+Unit=backup.service
+
+[Install]
+WantedBy=timers.target

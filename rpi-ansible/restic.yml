@@ -1,0 +1,23 @@
+---
+- name: Setup restic automatic backups
+  hosts: all
+  become: true
+  vars_prompt:
+    - name: restic_password
+      prompt: Restic password
+  tasks:
+
+  - name: Copy restic file list
+    ansible.builtin.copy:
+      src: ./restic-filelist
+      dest: "/home/{{ backup_user}}/"
+      owner: "{{ backup_user }}"
+      group: "{{ backup_user }}"
+
+  - name: Create restic password file
+    ansible.builtin.copy:
+      dest: "/home/{{ backup_user}}/.restic-password"
+      content: "{{ restic_password }}"
+      owner: "{{ backup_user }}"
+      group: "{{ backup_user }}"
+

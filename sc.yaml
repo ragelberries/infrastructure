@@ -1,9 +1,9 @@
-kind: StorageClass
 apiVersion: storage.k8s.io/v1
+kind: StorageClass
 metadata:
-  name: ragelberries
-provisioner: microk8s.io/hostpath
-reclaimPolicy: Retain
+  name: local-path-deterministic
+provisioner: rancher.io/local-path
+volumeBindingMode: WaitForFirstConsumer
 parameters:
-  pvDir: /mnt/ragelberries
-volumeBindingMode: Immediate
+  pathPattern: "{{ .PVC.Namespace }}/{{ .PVC.Name }}"
+reclaimPolicy: Retain

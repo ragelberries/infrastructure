@@ -1,0 +1,5 @@
+/mnt/arvidsson
+/var/lib/rancher/k3s/server/db
+/var/lib/rancher/k3s/server/token
+/etc/rancher/k3s/registries.yaml
+
