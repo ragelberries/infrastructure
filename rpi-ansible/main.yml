@@ -1,0 +1,11 @@
+- name: Main
+  hosts: rpis
+  tasks:
+  - name: set facts
+    ansible.builtin.set_fact:
+      backup_user: 'arvidsson-backup'
+
+- import_playbook: initial_setup.yml
+- import_playbook: backup.yml
+- import_playbook: rclone.yml
+

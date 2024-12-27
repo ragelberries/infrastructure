@@ -1,0 +1,33 @@
+---
+- name: Check if rclone.conf exists locally
+  hosts: all
+  tasks:
+  - name: Check if rclone.conf exists locally
+    connection: local
+    ansible.builtin.stat:
+      path: ~/.config/rclone/rclone.conf
+    register: rclone
+
+  - name: Fail if rclone.conf does not exist locally
+    connection: local
+    ansible.builtin.fail:
+      msg: "Run `rclone config` and make a google drive remote called google-arvidsson-backup. \
+        Set root_folder_id=1imFceBwOSBFjhcRL50xJN3v4Ecvamn8k in configuration"
+    when: not rclone.stat.exists
+
+  - name: Create rclone config folder
+    become: true
+    ansible.builtin.file:
+      path: "/home/{{ backup_user }}/.config/rclone"
+      recurse: true
+      state: directory
+      owner: "{{ backup_user }}"
+      group: "{{ backup_user }}"
+
+  - name: Copy rclone.conf
+    become: true
+    ansible.builtin.copy:
+      src: "~/.config/rclone/rclone.conf"
+      dest: "/home/{{ backup_user }}/.config/rclone"
+      owner: "{{ backup_user }}"
+      group: "{{ backup_user }}"

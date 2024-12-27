@@ -1,8 +1,0 @@
-- name: Main
-  hosts: rpis
-  vars:
-    backup_user: arvidsson-backup
-  tasks:
-  - name: rclone
-    ansible.builtin.include_tasks:
-      file: rclone.yaml

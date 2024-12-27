@@ -1,0 +1,24 @@
+---
+- name: Backup tasks
+  hosts: all
+  become: true
+  tasks:
+  - name: Create backup user
+    ansible.builtin.user:
+      name: "{{ backup_user }}"
+      create_home: yes
+
+  - name: Set read permissions
+    ansible.posix.acl:
+      path: /mnt/arvidsson
+      default: true
+      state: present
+      recursive: true
+      entity: "{{ backup_user }}"
+      etype: user
+      permissions: rx
+
+
+
+
+

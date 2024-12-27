@@ -1,5 +1,0 @@
-rpis:
-  hosts:
-    rpi5:
-      ansible_host: rpi5.local
-
