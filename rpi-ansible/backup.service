@@ -1,0 +1,19 @@
+[Unit]
+Description=Stop k3s, perform restic backup, and restart k3s
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStartPre=+/bin/systemctl stop k3s
+ExecStart=/usr/bin/restic \
+	-r rclone:google-arvidsson-backup:restic backup \
+	--files-from=/home/arvidsson-backup/restic-filelist \
+	--password-file=/home/arvidsson-backup/.restic-password \
+
+
+ExecStartPost=+/bin/systemctl start k3s
+User=arvidsson-backup
+Group=arvidsson-backup
+
+[Install]
+WantedBy=multi-user.target

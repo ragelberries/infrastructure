@@ -4,8 +4,11 @@
   - name: set facts
     ansible.builtin.set_fact:
       backup_user: 'arvidsson-backup'
+      storage_path: '/mnt/arvidsson'
 
 - import_playbook: initial_setup.yml
-- import_playbook: backup.yml
+- import_playbook: k3s.yml
+- import_playbook: backup-user.yml
 - import_playbook: rclone.yml
+- import_playbook: restic.yml
 

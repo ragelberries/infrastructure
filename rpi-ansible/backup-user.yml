@@ -1,0 +1,68 @@
+---
+- name: Backup tasks
+  hosts: all
+  become: true
+  tasks:
+  - name: Create backup user
+    ansible.builtin.user:
+      name: "{{ backup_user }}"
+      create_home: yes
+
+  - name: Set read permissions on storage_path
+    ansible.posix.acl:
+      path: "{{ storage_path }}"
+      entity: "{{ backup_user }}"
+      etype: user
+      recursive: true
+      permissions: rx
+      state: present
+
+  - name: Set default read permissions in storage_path
+    ansible.posix.acl:
+      path: "{{ storage_path }}"
+      entity: "{{ backup_user }}"
+      etype: user
+      permissions: rx
+      default: true
+      recalculate_mask: mask
+      state: present
+
+  - name: Set execute permissions K3s server folder
+    ansible.posix.acl:
+      path: /var/lib/rancher/k3s/server
+      state: present
+      entity: "{{ backup_user }}"
+      etype: user
+      permissions: x
+
+  - name: Set read permissions K3s server/db folder
+    ansible.posix.acl:
+      path: /var/lib/rancher/k3s/server/db
+      state: present
+      recursive: true
+      entity: "{{ backup_user }}"
+      etype: user
+      permissions: rx
+
+  - name: Set default read permissions K3s server folder
+    ansible.posix.acl:
+      path: /var/lib/rancher/k3s/server/db
+      default: true
+      recalculate_mask: mask
+      state: present
+      entity: "{{ backup_user }}"
+      etype: user
+      permissions: rx
+
+  - name: Set default read permissions on token
+    ansible.posix.acl:
+      path: /var/lib/rancher/k3s/server/token
+      state: present
+      entity: "{{ backup_user }}"
+      etype: user
+      permissions: r
+
+
+
+
+

@@ -1,0 +1,31 @@
+---
+- name: Setup k3s
+  hosts: all
+
+  tasks:
+  - name: Create backing storage for kubernetes
+    become: true
+    ansible.builtin.file:
+      path: /mnt/arvidsson
+      state: directory
+      mode: '700'
+
+  - name: Download K3s install script
+    ansible.builtin.get_url:
+      url: https://get.k3s.io/
+      timeout: 120
+      dest: ~/k3s-install.sh
+      mode: "0755"
+
+  - name: Install K3s
+    ansible.builtin.command:
+      argv:
+        - ~/k3s-install.sh
+        - --disable-cloud-controller
+        - --secrets-encryption
+        - "--default-local-storage-path={{ storage_path }}"
+    changed_when: true
+
+
+
+

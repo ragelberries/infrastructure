@@ -1,0 +1,19 @@
+[Unit]
+Description=Stop k3s, perform restic backup, and restart k3s
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStartPre=+/bin/systemctl stop k3s
+ExecStart=/usr/bin/restic \
+	-r rclone:{{ rclone_remote }}:{{ restic_repo }} backup \
+	--files-from=/home/{{ backup_user }} /restic-filelist \
+	--password-file=/home/{{ backup_user }}/.restic-password \
+
+
+ExecStartPost=+/bin/systemctl start k3s
+User={{ backup_user }}
+Group={{ backup_user }}
+
+[Install]
+WantedBy=multi-user.target
