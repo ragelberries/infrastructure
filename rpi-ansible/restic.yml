@@ -21,27 +21,3 @@
       owner: "{{ backup_user }}"
       group: "{{ backup_user }}"
 
-  - name: Copy backup.service
-    ansible.builtin.copy:
-      src: ./backup.service
-      dest: /etc/systemd/system/
-
-  - name: Copy backup.timer
-    ansible.builtin.copy:
-      src: ./backup.timer
-      dest: /etc/systemd/system/
-
-  - name: systemd daemon reload
-    ansible.builtin.systemd:
-      daemon_reload: true
-
-  - name: Install and enable backup.service
-    ansible.builtin.systemd:
-      name: backup.service
-      enabled: true
-
-  - name: Install and start backup.timer
-    ansible.builtin.systemd:
-      name: backup.timer
-      enabled: true
-      state: started

@@ -1,6 +1,10 @@
 ---
 - name: Setup k3s
   hosts: all
+  vars_prompt:
+  - name: restore_backup
+    prompt: Restore from backup (y/n)?
+    private: no
 
   tasks:
   - name: Create backing storage for kubernetes
@@ -25,7 +29,26 @@
         - --secrets-encryption
         - "--default-local-storage-path={{ storage_path }}"
     changed_when: true
+    environment:
+      INSTALL_K3S_SKIP_START: "{{ (restore_backup == 'y') | ternary('true', 'false') }}"
 
+  - name: Restore from backup
+    become: true
+    ansible.builtin.command:
+      cmd: >
+        /usr/bin/restic -r rclone:google-arvidsson-backup:restic restore latest
+        --target / -vv
+        --password-file /home/arvidsson-backup/.restic-password
+    when: restore_backup == 'y'
+    environment:
+      RCLONE_CONFIG: /home/arvidsson-backup/.config/rclone/rclone.conf
+
+  - name: Start k3s (only if restored backup)
+    become: true
+    ansible.builtin.systemd:
+      name: k3s.service
+      state: started
+    when: restore_backup == 'y'
 
 
 

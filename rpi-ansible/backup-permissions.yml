@@ -1,0 +1,65 @@
+
+---
+- name: Backup permissions
+  hosts: all
+  become: true
+  tasks:
+  - name: Set read and execute permissions on storage_path
+    ansible.posix.acl:
+      path: "{{ storage_path }}"
+      entity: "{{ backup_user }}"
+      etype: user
+      permissions: rx
+      default: true
+      recursive: true
+      state: present
+
+  - name: Set default mask in storage_path
+    ansible.posix.acl:
+      path: "{{ storage_path }}"
+      etype: mask
+      permissions: rx
+      default: true
+      recursive: true
+      state: present
+
+  - name: Set execute permissions K3s server folder
+    ansible.posix.acl:
+      path: /var/lib/rancher/k3s/server
+      state: present
+      entity: "{{ backup_user }}"
+      etype: user
+      permissions: x
+
+  - name: Set read and execute permissions in K3s server/db folder
+    ansible.posix.acl:
+      path: /var/lib/rancher/k3s/server/db
+      entity: "{{ backup_user }}"
+      etype: user
+      default: true
+      recursive: true
+      permissions: rx
+      state: present
+
+  - name: Set default mask in K3s server/db folder
+    ansible.posix.acl:
+      path: /var/lib/rancher/k3s/server/db
+      entity: "{{ backup_user }}"
+      etype: user
+      default: true
+      recursive: true
+      permissions: rx
+      state: present
+
+  - name: Set default read permissions on token
+    ansible.posix.acl:
+      path: /var/lib/rancher/k3s/server/token
+      state: present
+      entity: "{{ backup_user }}"
+      etype: user
+      permissions: r
+
+
+
+
+
