@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openapp
+spec:
+  selector:
+    matchLabels:
+      app: openapp
+  template:
+    metadata:
+      labels:
+        app: openapp
+    spec:
+      containers:
+      - name: openapp-nginx
+        image: docker.io/nginx
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: openapp
+spec:
+  type: NodePort
+  selector:
+    app: openapp
+  ports:
+    - name: openapp-port
+      port: 3000
+      nodePort: 30001
+      targetPort: 80
+
+

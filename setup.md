@@ -1,5 +1,5 @@
 # Setup environment
-Install Raspberry Pi Os Lite 64 bit Debian bookword  
+Install Raspberry Pi Os Lite 64 bit Debian bookworm
 
 ```
 sudo apt update
@@ -19,10 +19,19 @@ sudo mkdir /mnt/arvidsson
 Install k3s with
 ```
 curl -o k3s.sh https://get.k3s.io
-bash k3s.sh - --default-local-storage-path=/mnt/arvidsson
+bash k3s.sh - --default-local-storage-path=/mnt/arvidsson \
+--disable-cloud-controller \
+--secrets-encryption \
+--tls-san rpi5.local \
+--token TOKEN
 ```
 
-Deploy runner-role.yaml, runner-rolebinding.yaml (AND NOT ?? sc.yaml) manually as privileged user
+Copy config from k3s server with `sudo k3s kubectl view --raw` 
+and copy to local configuration and change server IP address
+
+Deploy sc.yaml to get persistent storage paths
+
+
 
 ```
 sudo adduser runner
