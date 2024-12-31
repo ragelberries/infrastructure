@@ -1,5 +1,5 @@
 ---
-- name: Setup restic automatic backups
+- name: Setup restic configuration
   hosts: all
   become: true
   vars_prompt:
@@ -20,4 +20,5 @@
       content: "{{ restic_password }}"
       owner: "{{ backup_user }}"
       group: "{{ backup_user }}"
+      mode: '600'
 

@@ -31,7 +31,13 @@
       replace: '\1 cgroup_enable=memory'
     register: cmdline
 
+  - name: Copy sysctl copy to disable ipv6
+    ansible.builtin.copy:
+      src: ./sysctl-local.conf
+      dest: /etc/sysctl.d/
+    register: copy_sysctl
+
   - name: Reboot to enable cgroup
     ansible.builtin.reboot:
-    when: cmdline.changed
+    when: cmdline.changed or copy_sysctl.changed
 
