@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-test
+spec:
+  selector:
+    matchLabels:
+      app: postgres-test
+  template:
+    metadata:
+      labels:
+        app: postgres-test
+    spec:
+      containers:
+        - name: postgres-test-db
+          image: docker.io/postgres
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: postgres-test
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-test-credentials
+                  key: password
+
+
+        - name: postgres-test-backend
+          image: arvidsson.azurecr.io/postgres-test:latest
+          env:
+          - name: POSTGRES_CONNECTIONSTRING
+            valueFrom:
+              secretKeyRef:
+                name: postgres-test-credentials
+                key: connectionstring
+      volumes:
+      - name: postgres-test
+        persistentVolumeClaim:
+          claimName: postgres-test
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-test
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path-deterministic
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-test
+spec:
+  selector:
+    app: postgres-test
+  type: NodePort
+  ports:
+    - name: postgres-test-backend
+      port: 3002
+      nodePort: 30002
+      targetPort: 8080
+    - name: postgres-test-db
+      port: 3003
+      nodePort: 30003
+      targetPort: 5432
+
+
